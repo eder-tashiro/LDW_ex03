@@ -4,14 +4,20 @@ from flask_marshmallow import Marshmallow
 from pymongo import MongoClient
 from bson import ObjectId
 from flask_cors import CORS
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)  # Habilita CORS para toda a aplicação
 api = Api(app)
 ma = Marshmallow(app)
 
+mongo_uri = os.getenv('MONGO_URI')
+
 # Conexão com o MongoDB
-client = MongoClient('mongodb+srv://edrgtes:e4vMhzeOTncVkzj7@cluster0.l8yxx.mongodb.net/')
+client = MongoClient(mongo_uri)
 db = client.library_db
 books_collection = db.books
 
